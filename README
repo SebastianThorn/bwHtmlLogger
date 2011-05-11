@@ -1,0 +1,17 @@
+This is a simple script that turn BroadWorks log-files into html-files.
+Please send me a note if you like this and would like that i keep develop it.
+
+USAGE
+	simple..
+	$ ./htmlLogger.rb <infile> <outfile>
+
+	infile is your log-file from BroadWorks
+	outfile is your html-file.
+
+EXAMPLE
+
+	$ ./htmlLogger.rb wierd-call.txt call.html
+
+Written by Sebastian Thörn
+Using emacs
+
