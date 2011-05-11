@@ -8,9 +8,10 @@
 # Using emacs
 
 colors = ['FFFF00','66FF00', '9900FF', 'FF0000', '0000FF', '660000']
-# change color after what you feel like having, and add more colors if you have more then 6 hosts that will bounce SIP-messages.
+# change color after what you feel like having
+# add more colors if you have more then 6 hosts that will bounce SIP-messages
 
-knownIp = {'<address to ns01>'=>'netserv01', '<address to ns02>'=>'netserv02'}
+knownIp = {'<address to ns01>'=>'netserv01', '<address to ns02>'=>'netserv02', '<address to sbc>'=>'sbc', '<address to some trunk>'=>'MX-one'}
 # replace and add your ip-addresses here to get their name instead of ip. (opinial)
 
 
