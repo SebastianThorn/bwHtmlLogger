@@ -1,6 +1,16 @@
 This is a simple script that turn BroadWorks log-files into html-files.
 Please send me a note if you like this and would like that i keep develop it.
 
+USAGE
+       simple..
+       $ ./htmlLogger <infile> <outfile>
+
+       infile is the logfile from BroadWorks
+       outfile if the asdf.html
+
+EXAMPLE
+       $ .htmlLogger wierd-call.txt call.html
+
 Written by Sebastian Thörn
 Using emacs
 
