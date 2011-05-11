@@ -102,21 +102,13 @@ for packet in filtered
   for host in hosts
     if head[0].include? host[0][0]
       sipMsg = ""
-      puts head[1]
       if head[1] =~ /^SIP\/2\.0/
         sipMsg = head[1].scan(/^SIP\/2\.0 (.*)$/)
-        puts sipMsg
-        puts 1
       elsif head[1] =~ /^[A-Z]*.*\@.*/
         sipMsg = head[1].scan(/(^[A-Z]*.*)\@.*/)
-        puts sipMsg
-        puts 2
       else
         sipMsg = head[1].scan(/(^[A-Z]*) .*/)
-        puts sipMsg
-        puts 3
       end
-      puts '---'
       html.puts "<td bgcolor=#FFFFFF>#{sipMsg}</td>"
       found = true
     else
