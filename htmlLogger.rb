@@ -77,26 +77,40 @@ puts hosts
 
 puts "starting to generate html"
 
-html = File.new(outName, 'w+')
-html.puts "<html><body>"
-html.puts "<table border='1'>"
-html.puts "<tr>"
+body = "<body>\n"
+body += "<table border='1'>\n"
+body += "<tr>"
+
+header = "<head>\n"
+header += "<script type=\"text/javascript\">\nfunction show_alert()\n{\nalert(\"Hello! I am an alert box!\");\n}\n"
+
+popup = "<td bgcolor=#FFFFFF><a onmouseover='this.style.cursor=\"pointer\" ' onfocus='this.blur();' onclick=\"document.getElementById('msg<ID>').style.display = 'block' \" >\n
+      <span style=\"text-decoration: underline;\"><WAY></span>
+    </a>
+    <div id='msg<ID>' style='display: none; position: absolute; left: 50px; top: <TOP>px; border: solid black 1px; padding: 10px; background-color: rgb(255,255,225); text-align: justify; font-size: 12px; float:left;'>\n
+<PACKET>}
+    <br />
+    <div style='text-align: right;'><a onmouseover='this.style.cursor=\"pointer\" ' style='font-size: 12px;' onfocus='this.blur();' onclick=\"document.getElementById('msg<ID>').style.display = 'none' \" >
+      <span style=\"text-decoration: underline;\">
+Close
+      </span></a></div></div></td>"
 
 i = 0
 for host in hosts
   if knownIp.include? host[0][0]
-    html.puts "<td bgcolor=#{colors[i]}>#{knownIp[host[0][0]]}</td>"
+    body += "<th bgcolor=#{colors[i]}>#{knownIp[host[0][0]]}</th>\n"
   else
-    html.puts "<td bgcolor=#{colors[i]}>#{host}</td>"
+    body += "<th bgcolor=#{colors[i]}>#{host}</th>\n"
   end
   i+=1
 end
-html.puts "<td bgcolor=FFFFFF>BroadWorks</td>"
-html.puts "</tr>"
+body += "<th bgcolor=FFFFFF>BroadWorks</th>\n"
+body += "</tr>\n"
 
+jsname = 1
 for packet in filtered
   head = packet[2..3]
-  html.puts "<tr>"
+  body += "<tr>\n"
   i = 0
   found = false
   for host in hosts
@@ -109,13 +123,13 @@ for packet in filtered
       else
         sipMsg = head[1].scan(/(^[A-Z]*) .*/)
       end
-      html.puts "<td bgcolor=#FFFFFF>#{sipMsg}</td>"
+      body += "<td bgcolor=#FFFFFF>#{sipMsg}</td>\n"
       found = true
     else
       if found
-        html.puts "<td bgcolor=#{colors[i]}></td>"
+        body += "<td bgcolor=#{colors[i]}></td>\n"
       else
-        html.puts "<td bgcolor=#FFFFFF></td>"
+        body += "<td bgcolor=#FFFFFF></td>\n"
       end
     end
     unless found
@@ -123,15 +137,25 @@ for packet in filtered
     end
   end
   if head[0].include? 'OUT'
-    html.puts "<td bgcolor=#FFFFFF><- OUT</td>"
+    body += popup.gsub('PACKET',packet.join('<br />')).gsub('<ID>', jsname.to_s).gsub('<WAY>','Packet out').gsub('<TOP>', (24*jsname).to_s)
   elsif head[0].include? 'IN'
-    html.puts "<td bgcolor=#FFFFFF>-> IN</td>"
+    body += popup.gsub('PACKET',packet.join('<br />')).gsub('<ID>', jsname.to_s).gsub('<WAY>','Packet in').gsub('<TOP>', (24*jsname).to_s)
   end
-  html.puts "</tr>"
+  body += "</tr>\n"
+  jsname += 1
 end
+body += "</table>\n"
 
-html.puts "</table>"
-html.puts "</body></html>"
+
+body += "</body>\n"
+header += "</script>\n"
+header += "</head>\n"
+
+html = File.new(outName, 'w+')
+html.puts "<html>"
+html.puts header
+html.puts body
+html.puts "</html>"
 html.close()
 
 puts "\n\nscript ended ok"
