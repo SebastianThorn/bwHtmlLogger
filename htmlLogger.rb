@@ -82,7 +82,6 @@ body += "<table border='1'>\n"
 body += "<tr>"
 
 header = "<head>\n"
-header += "<script type=\"text/javascript\">\nfunction show_alert()\n{\nalert(\"Hello! I am an alert box!\");\n}\n"
 
 popup = "<td bgcolor=#FFFFFF><a onmouseover='this.style.cursor=\"pointer\" ' onfocus='this.blur();' onclick=\"document.getElementById('msg<ID>').style.display = 'block' \" >\n
       <span style=\"text-decoration: underline;\"><WAY></span>
@@ -148,7 +147,6 @@ body += "</table>\n"
 
 
 body += "</body>\n"
-header += "</script>\n"
 header += "</head>\n"
 
 html = File.new(outName, 'w+')
